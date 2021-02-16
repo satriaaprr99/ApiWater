@@ -11,12 +11,6 @@ class RegisterController extends Controller
 {
     public function register(RegisterRequest $request){
 
-    	$this->validate($request, [
-            'name' => 'required|max:50',
-            'email' => 'required|unique:users|max:50',
-            'password' => 'required'
-        ]);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -30,6 +24,6 @@ class RegisterController extends Controller
         return (new UserResource($request->user()))
                 ->additional(['meta' => [
                     'token' => $token,
-                ]]);
+                ]], 201);
     }
 }
