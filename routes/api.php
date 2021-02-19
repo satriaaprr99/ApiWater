@@ -18,6 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register', 'RegisterController@register');
-Route::post('/login', 'LoginController@login');
-Route::get('/user', 'UserController@user');
+Route::post('register', 'AuthController@register');
+Route::post('login', 'AuthController@login');
+Route::post('logout', 'AuthController@logout');
+Route::post('refresh', 'AuthController@refresh');
+Route::post('me', 'AuthController@me');
+Route::get('user', 'UserController@user');
+
+Route::get('barang', 'BarangController@index');
+Route::post('barang', 'BarangController@create');
