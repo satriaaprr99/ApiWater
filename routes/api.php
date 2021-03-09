@@ -23,7 +23,9 @@ Route::post('login', 'AuthController@login');
 Route::post('logout', 'AuthController@logout');
 Route::post('refresh', 'AuthController@refresh');
 Route::post('me', 'AuthController@me');
-Route::get('user', 'UserController@user');
 
+Route::get('barang/{id}', 'BarangController@show');
 Route::get('barang', 'BarangController@index');
 Route::post('barang', 'BarangController@create');
+
+Route::get('user', 'UserController@index');

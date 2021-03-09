@@ -20,15 +20,18 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if(!$token = auth()->attempt($credentials)){
-        	return response()->json(['error' => 'Email atau Password Salah!'], 401);
+        	return response()->json(['message' => 'Email atau Password Salah!'], 401);
         };
 
         return (new UserResource($request->user()))
-                ->additional(['meta' => [
-                    'token' => $token,
-                    'token_type' => 'bearer',
-                    'expires_in' => auth()->factory()->getTTL() * 240
-                ]], 200);
+                ->additional([
+                    'status' => 200,
+                    'message' => 'Login Success',
+                    'meta' => [
+                        'token' => $token,
+                        'token_type' => 'bearer',
+                        'expires_in' => auth()->factory()->getTTL() * 100000]
+                ], 200);
     }
 
      public function register(RegisterRequest $request){

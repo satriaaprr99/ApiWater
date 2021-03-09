@@ -10,12 +10,10 @@ class BarangController extends Controller
 {
 	public function index(){
 
-		$data = DB::table('barangs')
-		->select('*',DB::RAW('barangs.id_barang as id'))
-		->get();
+		$data = Barang::all();
 
 		return response()->json([
-			"status" => "200",
+			"status" => 200,
 			"message" => "success",
 			"data" => $data
 		], 200);
@@ -32,8 +30,44 @@ class BarangController extends Controller
 		]);
 
 		return response()->json([
-			"status" => "Created",
+			"status" => 201,
 			"message" => "success"
 		], 201);
 	}
+
+	public function show($id){
+
+        $check_data = Barang::firstWhere('id', $id);
+
+        if($check_data){
+            return response()->json(Barang::find($id), 200);
+        } else {
+            return response([
+                'status' => 'ERROR',
+                'message'=> 'Data Tidak Ditemukan',
+            ], 404);
+        }
+
+    }
+
+	public function update(Request $request, $id){
+
+         $check_data =  Barang::firstWhere('id', $id);
+
+        if($check_data){
+            $data = Barang::find($id);
+            $data->update($request->all());
+            return response()->json([
+            	"status" => 200,
+				"message" => "success",
+				"data" => $data
+            ], 200);
+        }else{
+            return response([
+                'status' => 404,
+                'message'=> 'error',
+            ], 404);
+        }
+
+    }
 }
